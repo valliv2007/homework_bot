@@ -116,7 +116,7 @@ def main():
 
     while True:
         try:
-            response = get_api_answer(current_timestamp - 5000000)
+            response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
             if homeworks != []:
                 if homeworks[0].get('status') == status:
