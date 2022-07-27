@@ -105,10 +105,7 @@ def parse_status(homework: Dict[str, Any]) -> str:
 def check_tokens() -> bool:
     """Проверка переменных окружения."""
     tokens = [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
-    if all(tokens):
-        return True
-    else:
-        return False
+    return all(tokens)
 
 
 def main() -> str:
