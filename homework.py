@@ -125,7 +125,7 @@ def main() -> str:
 
     while True:
         try:
-            response = get_api_answer(current_timestamp - 1000000)
+            response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
             if homeworks:
                 if homeworks[0].get('status') == prev_status:
