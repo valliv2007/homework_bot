@@ -119,11 +119,11 @@ def main() -> str:
     current_timestamp = int(time.time())
     prev_status = ''
     message = ''
-
     while True:
         try:
             response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
+            logging.debug([response, current_timestamp])
             if homeworks:
                 if homeworks[0].get('status') == prev_status:
                     logging.debug('Статус работы не изменился')
