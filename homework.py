@@ -18,7 +18,7 @@ PRACTICUM_TOKEN = os.getenv('TOKEN_PRACTICUM')
 TELEGRAM_TOKEN = str(os.getenv('TOKEN_BOT'))
 TELEGRAM_CHAT_ID = os.getenv('MY_PHONE_ID')
 
-RETRY_TIME = 600
+RETRY_TIME = 60
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 
@@ -118,6 +118,7 @@ def main() -> str:
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     prev_status = ''
+    prev_time = ''
     message = ''
     while True:
         try:
@@ -125,13 +126,15 @@ def main() -> str:
             homeworks = check_response(response)
             logging.debug([response, current_timestamp])
             if homeworks:
-                if homeworks[0].get('status') == prev_status:
+                if (homeworks[0].get('status') == prev_status
+                        and homeworks[0].get('date_updated') == prev_time):
                     logging.debug('Статус работы не изменился')
                 else:
                     prev_status = str(homeworks[0].get('status'))
+                    prev_time = str(homeworks[0].get('date_updated'))
                     message = parse_status(homeworks[0])
                     send_message(bot, message)
-            current_timestamp = int(str(response.get('current_date')))
+            current_timestamp = int(str(response.get('current_date'))) - 1
         except exceptions.NotSendMessage as error:
             logging.error(f'Ошибка: {error}')
         except Exception as error:
