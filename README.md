@@ -5,7 +5,7 @@
 ## Технологии.
 Python 3.7.9,
 python-telegram-bot 13.7, 
-requests==2.26.0
+requests 2.26.0
 
 ## Установка
 Как запустить проект:
